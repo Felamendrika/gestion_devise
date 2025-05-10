@@ -21,6 +21,7 @@ const CurrencyConverter = () => {
 
   const navigate = useNavigate();
 
+  // solona codeISO ny id sourceCurrency et targetCurrency
   const performConversion = useCallback(() => {
     if (
       amount > 0 &&
@@ -111,7 +112,7 @@ const CurrencyConverter = () => {
         {convertedAmount && (
           <h2 className="text-xl mb-6 font-bold text-gray-500 text-center">
             {amount} {sourceCurrency?.codeISO} en {targetCurrency?.codeISO} -
-            Conversion de {sourceCurrency?.nom_complet} vers
+            Conversion de {sourceCurrency?.nom_complet} vers {}
             {targetCurrency?.nom_complet}
           </h2>
         )}
