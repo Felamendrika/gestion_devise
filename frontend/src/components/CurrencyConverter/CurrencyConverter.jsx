@@ -1,55 +1,82 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-
-import currencies from "../../mocks/currencies";
-import ratesWithMargin from "../../mocks/ratesWithMargin";
-// import rates from "../../mocks/rates";
 
 import CurrencyDropdown from "../common/CurrencyDropdown";
 import PopularConversionsTable from "../common/PopularConversionsTable";
 
+// importation contexte
+import { AppContext } from "../../context/AppContext";
+
 const CurrencyConverter = () => {
   const [amount, setAmount] = useState("");
-  const [sourceCurrency, setSourceCurrency] = useState("");
-  const [targetCurrency, setTargetCurrency] = useState("");
+  const [sourceCurrency, setSourceCurrency] = useState(null);
+  const [targetCurrency, setTargetCurrency] = useState(null);
   const [convertedAmount, setConvertedAmount] = useState(null);
 
   const [rate, setRate] = useState(null);
   const [inverseRate, setInverseRate] = useState(null);
+  const [uniteSource, setUniteSource] = useState("");
+  const [uniteCible, setUniteCible] = useState("");
+
   const [isConverting, setIsConverting] = useState(false);
   const [isFirstConversion, setIsFirstConversion] = useState(true);
+  const [error, setError] = useState(null); // gestion des erreurs
 
   const navigate = useNavigate();
 
-  // solona codeISO ny id sourceCurrency et targetCurrency
-  const performConversion = useCallback(() => {
+  // utilisation contexte
+  const { devises, conversionDevise } = useContext(AppContext);
+
+  // conversion principale appelee manuellement au auto
+  const performConversion = useCallback(async () => {
     if (
       amount > 0 &&
       sourceCurrency &&
       targetCurrency &&
-      sourceCurrency.id !== targetCurrency.id
+      sourceCurrency.code_iso !== targetCurrency.code_iso
     ) {
-      const taux = ratesWithMargin.find(
-        (r) =>
-          r.devise_source_id === sourceCurrency.id &&
-          r.devise_cible_id === targetCurrency.id
-      );
+      try {
+        setError(null); // nettoyage des erreurs precedent
+        const result = await conversionDevise({
+          montant: amount,
+          source: sourceCurrency.code_iso,
+          cible: targetCurrency.code_iso,
+        });
 
-      if (taux) {
-        setRate(taux.taux_vente);
-        setInverseRate(1 / taux.taux_vente);
-        setConvertedAmount((amount * taux.taux_vente).toFixed(4));
-      } else {
+        if (result) {
+          setRate(parseFloat(result.taux_vente));
+          setInverseRate(1 / parseFloat(result.taux_vente));
+          setConvertedAmount(parseFloat(result.resultat).toFixed(4));
+          setUniteSource(result.unite_source);
+          setUniteCible(result.unite_cible);
+        } else {
+          setRate(null);
+          setInverseRate(null);
+          setConvertedAmount("Taux de change non disponible");
+          throw new Error("Taux de conversion indisponible");
+        }
+      } catch (err) {
+        console.error("Erreur conversion :", err);
+        if (err.response?.data?.message) {
+          setError(err.response.data.message);
+        } else {
+          setError("La conversion a échoué. Veuillez réessayer plus tard.");
+        }
+
+        setConvertedAmount(null);
         setRate(null);
         setInverseRate(null);
-        setConvertedAmount("Taux de change non disponible");
+        setUniteSource("");
+        setUniteCible("");
       }
     } else {
       setConvertedAmount(null);
       setRate(null);
       setInverseRate(null);
+      setUniteSource("");
+      setUniteCible("");
     }
-  }, [amount, sourceCurrency, targetCurrency]);
+  }, [amount, sourceCurrency, targetCurrency, conversionDevise]);
 
   // Effet pour la conversion automatique (uniquement après la première conversion)
   useEffect(() => {
@@ -69,6 +96,7 @@ const CurrencyConverter = () => {
     isFirstConversion,
   ]);
 
+  //conversion manuelle
   const handleConversion = () => {
     setIsConverting(true);
     setTimeout(() => {
@@ -96,7 +124,7 @@ const CurrencyConverter = () => {
     Number(amount) <= 0 ||
     !sourceCurrency ||
     !targetCurrency ||
-    sourceCurrency.id === targetCurrency.id;
+    sourceCurrency.code_iso === targetCurrency.code_iso;
 
   const popularValues = [1, 5, 10, 25, 50, 100, 250, 500, 1000, 5000, 10000];
 
@@ -111,7 +139,7 @@ const CurrencyConverter = () => {
       <div className="w-full max-w-5xl mx-auto bg-white rounded-2xl shadow-xl p-6 sm:p-10 mb-8">
         {convertedAmount && (
           <h2 className="text-xl mb-6 font-bold text-gray-500 text-center">
-            {amount} {sourceCurrency?.codeISO} en {targetCurrency?.codeISO} -
+            {amount} {sourceCurrency?.code_iso} en {targetCurrency?.code_iso} -
             Conversion de {sourceCurrency?.nom_complet} vers {}
             {targetCurrency?.nom_complet}
           </h2>
@@ -132,9 +160,10 @@ const CurrencyConverter = () => {
             />
           </div>
 
+          {/* Devise source */}
           <div className="md:col-span-2">
             <CurrencyDropdown
-              currencies={currencies}
+              currencies={devises}
               value={sourceCurrency}
               onChange={setSourceCurrency}
               label="Devise source"
@@ -142,6 +171,7 @@ const CurrencyConverter = () => {
             />
           </div>
 
+          {/* Inversion */}
           <div className="flex items-center justify-center md:col-span-1">
             <button
               onClick={handleSwapCurrencies}
@@ -164,9 +194,10 @@ const CurrencyConverter = () => {
             </button>
           </div>
 
+          {/* Devise cible */}
           <div className="md:col-span-2">
             <CurrencyDropdown
-              currencies={currencies}
+              currencies={devises}
               value={targetCurrency}
               onChange={setTargetCurrency}
               label="Devise cible"
@@ -215,19 +246,24 @@ const CurrencyConverter = () => {
             Suivre les taux de change →
           </button>
         </div>
+        {/* Message d'erreur si API echoue */}
+        {error && (
+          <div className="mt-4 text-red-500 font-medium text-center">
+            {error}
+          </div>
+        )}
 
+        {/* Resulatat conversion */}
         {convertedAmount && (
           <div className="mt-4 text-left">
             <div className="text-2xl font-bold text-gray-600">
-              {amount} {sourceCurrency?.codeISO} = {convertedAmount}{" "}
-              {targetCurrency?.codeISO}
+              {amount} {sourceCurrency?.code_iso} = {convertedAmount}{" "}
+              {targetCurrency?.code_iso}
             </div>
-            {rate && (
+            {(uniteSource || uniteCible) && (
               <div className="text-gray-600 mt-2">
-                1 {sourceCurrency?.codeISO} = {rate} {targetCurrency?.codeISO}
-                <br />1 {targetCurrency?.codeISO} ={" "}
-                {inverseRate && inverseRate.toFixed(4)}{" "}
-                {sourceCurrency?.codeISO}
+                {uniteSource && <div>{uniteSource}</div>}
+                {uniteCible && <div>{uniteCible}</div>}
               </div>
             )}
           </div>
@@ -261,6 +297,7 @@ const CurrencyConverter = () => {
         </div>
       </div>
 
+      {/* TABLEAUX DE CONVERSION POPULAIRE */}
       {convertedAmount && rate && sourceCurrency && targetCurrency && (
         <div className="max-w-6xl mx-auto mt-12 mb-8 flex flex-col md:flex-row gap-8 justify-center">
           <div className="flex-1">

@@ -1,0 +1,62 @@
+[
+  {
+    "code_iso": "USD",
+    "nom_complet": "Dollar américain",
+    "symbole": "$",
+    "code_pays": "US"
+  },
+  {
+    "code_iso": "EUR",
+    "nom_complet": "Euro",
+    "symbole": "€",
+    "code_pays": "EU"
+  },
+  {
+    "code_iso": "MGA",
+    "nom_complet": "Ariary malgache",
+    "symbole": "Ar",
+    "code_pays": "MG"
+  },
+  {
+    "code_iso": "GBP",
+    "nom_complet": "Livre sterling",
+    "symbole": "£",
+    "code_pays": "GB"
+  },
+  {
+    "code_iso": "JPY",
+    "nom_complet": "Yen japonais",
+    "symbole": "¥",
+    "code_pays": "JP"
+  },
+  {
+    "code_iso": "CNY",
+    "nom_complet": "Yuan chinois",
+    "symbole": "¥",
+    "code_pays": "CN"
+  },
+  {
+    "code_iso": "INR",
+    "nom_complet": "Roupie indienne",
+    "symbole": "₹",
+    "code_pays": "IN"
+  },
+  {
+    "code_iso": "AUD",
+    "nom_complet": "Dollar australien",
+    "symbole": "$",
+    "code_pays": "AU"
+  },
+  {
+    "code_iso": "CAD",
+    "nom_complet": "Dollar canadien",
+    "symbole": "$",
+    "code_pays": "CA"
+  },
+  {
+    "code_iso": "CHF",
+    "nom_complet": "Franc suisse",
+    "symbole": "CHF",
+    "code_pays": "CH"
+  }
+]

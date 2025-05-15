@@ -1,47 +1,82 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useContext } from "react";
 import ReactCountryFlag from "react-country-flag";
-import currencies from "../../mocks/currencies";
-import rates from "../../mocks/rates";
-import ratesWithMargin from "../../mocks/ratesWithMargin";
+
 import CurrencyDropdown from "../common/CurrencyDropdown";
+
+// importation contexte
+import { AppContext } from "../../context/AppContext";
 
 const ExchangeRates = () => {
   const [sourceCurrency, setSourceCurrency] = useState(null);
   const [trackedCurrencies, setTrackedCurrencies] = useState([]);
   const [showAddList, setShowAddList] = useState(false);
   const [search, setSearch] = useState("");
+
+  const [fluctuations, setFluctuations] = useState({});
+  const [realRates, setRealRates] = useState({});
+  const [montants, setMontants] = useState({});
+
   const addListRef = useRef(null);
 
-  // Obtenir le taux de change réel entre deux devises
-  const getExchangeRate = (sourceId, targetId) => {
-    const rate = rates.find(
-      (r) => r.devise_source_id === sourceId && r.devise_cible_id === targetId
-    );
-    return rate ? rate.taux : null;
-  };
+  const {
+    devises,
+    pairesPopulaires,
+    fetchTauxReel,
+    fetchTauxAvecMarge,
+    fetchFluctuation,
+  } = useContext(AppContext);
 
-  // Calcul de la fluctuation sur 24h pour une paire
-  const getFluctuation = (sourceId, targetId) => {
-    // On récupère tous les taux pour la paire, triés par date décroissante
-    const pairRates = rates
-      .filter(
-        (r) => r.devise_source_id === sourceId && r.devise_cible_id === targetId
-      )
-      .sort((a, b) => new Date(b.date_maj) - new Date(a.date_maj));
-    if (pairRates.length < 2) return null;
-    const current = pairRates[0].taux;
-    const previous = pairRates[1].taux;
-    if (!previous || previous === 0) return null;
-    const fluct = ((current - previous) / previous) * 100;
-    return fluct;
-  };
+  // MAJ des donnees a suivre quand source ou tracked change
+  useEffect(() => {
+    const fetchData = async () => {
+      if (!sourceCurrency || trackedCurrencies.length === 0) return;
+
+      for (const currency of trackedCurrencies) {
+        const key = `${sourceCurrency.code_iso}_${currency.code_iso}`;
+        try {
+          const [tauxReel, tauxMarge, fluct] = await Promise.all([
+            fetchTauxReel(sourceCurrency.code_iso, currency.code_iso),
+            fetchTauxAvecMarge(sourceCurrency.code_iso, currency.code_iso),
+            fetchFluctuation(sourceCurrency.code_iso, currency.code_iso),
+          ]);
+
+          setRealRates((prev) => ({
+            ...prev,
+            [key]: tauxReel?.taux_actuel ?? "—",
+          }));
+          setMontants((prev) => ({
+            ...prev,
+            [key]: tauxMarge ? (1 * tauxMarge.taux_vente).toFixed(4) : "—",
+          }));
+
+          setFluctuations((prev) => ({
+            ...prev,
+            [key]: isNaN(fluct) ? null : fluct,
+          }));
+        } catch (err) {
+          console.error("Erreur de récupération de données pour", key, err);
+
+          setRealRates((prev) => ({ ...prev, [key]: "—" }));
+          setMontants((prev) => ({ ...prev, [key]: "—" }));
+          setFluctuations((prev) => ({ ...prev, [key]: null }));
+        }
+      }
+    };
+    fetchData();
+  }, [
+    sourceCurrency,
+    trackedCurrencies,
+    fetchTauxReel,
+    fetchTauxAvecMarge,
+    fetchFluctuation,
+  ]);
 
   // Ajouter une devise à suivre
   const handleAddCurrency = (currency) => {
     if (
       currency &&
-      !trackedCurrencies.find((c) => c.id === currency.id) &&
-      currency.id !== sourceCurrency?.id
+      !trackedCurrencies.find((c) => c.code_iso === currency.code_iso) &&
+      currency.code_iso !== sourceCurrency?.code_iso
     ) {
       setTrackedCurrencies([...trackedCurrencies, currency]);
       setShowAddList(false);
@@ -50,53 +85,25 @@ const ExchangeRates = () => {
   };
 
   // Suppression d'une devise suivie
-  const handleDeleteCurrency = (currencyId) => {
-    setTrackedCurrencies(trackedCurrencies.filter((c) => c.id !== currencyId));
+  const handleDeleteCurrency = (codeIso) => {
+    setTrackedCurrencies(
+      trackedCurrencies.filter((c) => c.code_iso !== codeIso)
+    );
   };
 
   // Liste des devises disponibles à ajouter (hors source et déjà suivies)
-  const availableCurrencies = currencies.filter(
+  const availableCurrencies = devises.filter(
     (c) =>
-      c.id !== sourceCurrency?.id &&
-      !trackedCurrencies.find((tc) => tc.id === c.id)
+      c.code_iso !== sourceCurrency?.code_iso &&
+      !trackedCurrencies.find((tc) => tc.code_iso === c.code_iso)
   );
 
   // Filtrage par recherche
   const filteredCurrencies = availableCurrencies.filter(
     (c) =>
-      c.codeISO.toLowerCase().includes(search.toLowerCase()) ||
+      c.code_iso.toLowerCase().includes(search.toLowerCase()) ||
       c.nom_complet.toLowerCase().includes(search.toLowerCase())
   );
-
-  // Liste des paires populaires prédéfinies (exemple)
-  const popularPairs = [
-    { source: "USD", target: "EUR" },
-    { source: "USD", target: "GBP" },
-    { source: "EUR", target: "USD" },
-    { source: "EUR", target: "GBP" },
-    { source: "USD", target: "CAD" },
-    { source: "EUR", target: "INR" },
-  ];
-
-  // Helper pour trouver l'objet devise par codeISO
-  const getCurrencyByCode = (code) =>
-    currencies.find((c) => c.codeISO === code);
-
-  // Helper pour trouver le taux réel actuel pour une paire
-  const getCurrentRate = (sourceId, targetId) => {
-    const pairRates = rates
-      .filter(
-        (r) => r.devise_source_id === sourceId && r.devise_cible_id === targetId
-      )
-      .sort((a, b) => new Date(b.date_maj) - new Date(a.date_maj));
-    return pairRates.length > 0 ? pairRates[0] : null;
-  };
-
-  // Helper pour trouver le taux avec marge pour une paire
-  const getMarginRate = (sourceId, targetId) =>
-    ratesWithMargin.find(
-      (r) => r.devise_source_id === sourceId && r.devise_cible_id === targetId
-    );
 
   // Fermer la liste si clic en dehors
   useEffect(() => {
@@ -130,7 +137,7 @@ const ExchangeRates = () => {
             Sélectionnez votre devise de référence
           </h2>
           <CurrencyDropdown
-            currencies={currencies}
+            currencies={devises}
             value={sourceCurrency}
             onChange={setSourceCurrency}
             placeholder="Choisir une devise"
@@ -149,6 +156,9 @@ const ExchangeRates = () => {
                   Montant
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Taux réel
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Fluctuation (24h)
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -163,18 +173,18 @@ const ExchangeRates = () => {
                   {sourceCurrency ? (
                     <div className="flex items-center">
                       <ReactCountryFlag
-                        countryCode={sourceCurrency.countryCode}
+                        countryCode={sourceCurrency.code_pays}
                         svg
                         style={{
                           width: "1.5em",
                           height: "1.5em",
                           marginRight: "0.5em",
                           borderRadius: "100%",
-                          overflow: "hidden",
+                          objectFit: "cover",
                         }}
                       />
                       <span className="text-base font-semibold mr-2">
-                        {sourceCurrency.codeISO}
+                        {sourceCurrency.code_iso}
                       </span>
                       <span className="text-gray-600">
                         {sourceCurrency.nom_complet}
@@ -190,30 +200,35 @@ const ExchangeRates = () => {
                   {sourceCurrency ? 1 : "—"}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">—</td>
+                <td className="px-6 py-4 whitespace-nowrap">—</td>
                 <td className="px-6 py-4 whitespace-nowrap"></td>
               </tr>
               {/* Lignes suivantes : devises suivies */}
               {trackedCurrencies.map((currency) => {
-                const fluct = sourceCurrency
-                  ? getFluctuation(sourceCurrency.id, currency.id)
-                  : null;
+                const key = `${sourceCurrency.code_iso}_${currency.code_iso}`;
+                const taux = realRates[key];
+                const montant = montants[key];
+                const fluct = fluctuations[key];
+
                 return (
-                  <tr key={currency.id} className="hover:bg-gray-50">
+                  <tr
+                    key={currency.code_iso}
+                    className="hover:bg-gray-50 hover:cursor-default"
+                  >
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="flex items-center">
                         <ReactCountryFlag
-                          countryCode={currency.countryCode}
+                          countryCode={currency.code_pays}
                           svg
                           style={{
                             width: "1.5em",
                             height: "1.5em",
                             marginRight: "0.5em",
                             borderRadius: "50%",
-                            overflow: "hidden",
                           }}
                         />
                         <span className="text-base font-semibold mr-2">
-                          {currency.codeISO}
+                          {currency.code_iso}
                         </span>
                         <span className="text-gray-600">
                           {currency.nom_complet}
@@ -221,12 +236,14 @@ const ExchangeRates = () => {
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-lg">
-                      {sourceCurrency
-                        ? getExchangeRate(sourceCurrency.id, currency.id) ?? "—"
-                        : "—"}
+                      {montant ?? "—"}
                     </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-lg">
+                      {taux ?? "—"}
+                    </td>
+
                     <td className="px-6 py-4 whitespace-nowrap font-semibold">
-                      {fluct === null ? (
+                      {fluct === null || isNaN(fluct) ? (
                         <span className="text-gray-400">—</span>
                       ) : (
                         <span
@@ -250,7 +267,7 @@ const ExchangeRates = () => {
                     <td className="px-6 py-4 whitespace-nowrap">
                       <button
                         className="text-red-600 hover:text-red-900 font-medium"
-                        onClick={() => handleDeleteCurrency(currency.id)}
+                        onClick={() => handleDeleteCurrency(currency.code_iso)}
                       >
                         Supprimer
                       </button>
@@ -267,7 +284,7 @@ const ExchangeRates = () => {
           <div className="flex justify-between items-center mt-3">
             <div className="relative">
               <button
-                className="group flex items-center text-blue-600 hover:text-blue-800 font-bold text-lg transition mb-2"
+                className="group flex items-center text-blue-600 hover:cursor-pointer hover:text-blue-800 font-bold text-lg transition mb-2"
                 onClick={() => setShowAddList((v) => !v)}
               >
                 <span className="flex items-center justify-center w-8 h-8 rounded-full bg-blue-100 mr-3">
@@ -297,22 +314,22 @@ const ExchangeRates = () => {
                     ) : (
                       filteredCurrencies.map((currency) => (
                         <div
-                          key={currency.id}
+                          key={currency.code_iso}
                           className="flex items-center gap-2 px-2 py-2 rounded hover:bg-blue-50 cursor-pointer"
                           onClick={() => handleAddCurrency(currency)}
                         >
                           <ReactCountryFlag
-                            countryCode={currency.countryCode}
+                            countryCode={currency.code_pays}
                             svg
                             style={{
                               width: "1.5em",
                               height: "1.5em",
-                              borderRadius: "50%",
-                              overflow: "hidden",
+                              borderRadius: "100%",
+                              objectFit: "cover",
                             }}
                           />
                           <span className="font-semibold">
-                            {currency.codeISO}
+                            {currency.code_iso}
                           </span>
                           <span className="text-gray-600">
                             {currency.nom_complet}
@@ -330,7 +347,7 @@ const ExchangeRates = () => {
                 setSourceCurrency(null);
                 setTrackedCurrencies([]);
               }}
-              className="px-4 py-2 border border-gray-300 rounded-lg bg-transparent hover:bg-gray-100 active:bg-gray-200 transition-all duration-200 ease-in-out transform hover:scale-105 active:scale-95 text-gray-700 font-medium"
+              className="px-4 py-2 border-2 border-gray-400 rounded-lg bg-transparent hover:bg-gray-100 active:bg-gray-200 transition-all duration-200 ease-in-out transform hover:scale-105 active:scale-95 text-gray-700 font-medium"
             >
               Annuler
             </button>
@@ -372,70 +389,32 @@ const ExchangeRates = () => {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200">
-                  {popularPairs.map((pair, idx) => {
-                    const source = getCurrencyByCode(pair.source);
-                    const target = getCurrencyByCode(pair.target);
-                    const realRate =
-                      source && target
-                        ? getCurrentRate(source.id, target.id)
-                        : null;
-                    const marginRate =
-                      source && target
-                        ? getMarginRate(source.id, target.id)
-                        : null;
+                  {pairesPopulaires.map((pair, idx) => {
+                    // afaka asina appel fonction fetchDeviseByCode
+                    /*const source = getCurrencyByCode(pair.source);
+                    const target = getCurrencyByCode(pair.target); */
+
                     return (
                       <tr
                         key={idx}
-                        className="hover:bg-gray-50 transition-colors"
+                        className="hover:bg-gray-50 hover:cursor-default transition-colors"
                       >
                         <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="flex items-center space-x-3">
-                            <div className="flex items-center">
-                              <ReactCountryFlag
-                                countryCode={source?.countryCode}
-                                svg
-                                style={{
-                                  width: "1.5em",
-                                  height: "1.5em",
-                                  borderRadius: "50%",
-                                  overflow: "hidden",
-                                }}
-                                className="mr-2"
-                              />
-                              <span className="font-medium">
-                                {source?.codeISO}
-                              </span>
-                            </div>
-                            <span className="text-gray-400">/</span>
-                            <div className="flex items-center">
-                              <ReactCountryFlag
-                                countryCode={target?.countryCode}
-                                svg
-                                style={{
-                                  width: "1.5em",
-                                  height: "1.5em",
-                                  borderRadius: "100%",
-                                  overflow: "hidden",
-                                }}
-                                className="mr-2"
-                              />
-                              <span className="font-medium">
-                                {target?.codeISO}
-                              </span>
-                            </div>
-                          </div>
+                          {pair.source} / {pair.cible}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap font-medium text-blue-500">
-                          {realRate ? realRate.taux : "—"}
+                          {pair.taux_reel ?? "—"}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap font-medium">
-                          {marginRate ? marginRate.taux_vente : "—"}
+                          {pair.taux_vente ?? "—"}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap font-medium">
-                          {marginRate ? marginRate.taux_achat : "—"}
+                          {pair.taux_achat ?? "—"}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-gray-500">
-                          {realRate ? realRate.date_maj : "—"}
+                          {pair.date_maj
+                            ? new Date(pair.date_maj).toLocaleDateString()
+                            : "—"}
                         </td>
                       </tr>
                     );
