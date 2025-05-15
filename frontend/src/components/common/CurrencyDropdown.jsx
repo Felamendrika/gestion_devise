@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import ReactCountryFlag from "react-country-flag";
+import { AppContext } from "../../context/AppContext";
 
 const CurrencyDropdown = ({
-  currencies,
   value,
   onChange,
   placeholder = "Sélectionnez une devise",
@@ -11,12 +11,18 @@ const CurrencyDropdown = ({
   const [search, setSearch] = useState("");
   const [open, setOpen] = useState(false);
 
+  // acces aux devises globales via le context
+  const { devises } = useContext(AppContext);
+
   // Filtrage dynamique selon la recherche
-  const filtered = currencies.filter(
-    (c) =>
-      c.countryCode.toLowerCase().includes(search.toLowerCase()) ||
-      c.nom_complet.toLowerCase().includes(search.toLowerCase())
-  );
+  const filtered = Array.isArray(devises)
+    ? devises.filter(
+        (c) =>
+          c.code_iso.toLowerCase().includes(search.toLowerCase()) ||
+          c.code_pays.toLowerCase().includes(search.toLowerCase()) ||
+          c.nom_complet.toLowerCase().includes(search.toLowerCase())
+      )
+    : [];
 
   return (
     <div className="relative w-full">
@@ -32,12 +38,15 @@ const CurrencyDropdown = ({
         {value ? (
           <div className="flex items-center gap-2">
             <ReactCountryFlag
-              countryCode={value.countryCode}
+              countryCode={value.code_pays}
               svg
-              style={{ width: "1.5em", height: "1.5em", rounded: "full" }}
+              style={{
+                width: "2em",
+                height: "2em",
+              }}
             />
             <span>
-              {value.codeISO} - {value.nom_complet}
+              {value.code_iso} - {value.nom_complet}
             </span>
           </div>
         ) : (
@@ -62,7 +71,7 @@ const CurrencyDropdown = ({
           )}
           {filtered.map((c) => (
             <div
-              key={c.codeISO}
+              key={c.code_iso}
               className="flex items-center gap-2 p-2 hover:bg-blue-50 cursor-pointer"
               onClick={() => {
                 onChange(c);
@@ -71,15 +80,16 @@ const CurrencyDropdown = ({
               }}
             >
               <ReactCountryFlag
-                countryCode={c.countryCode}
+                countryCode={c.code_pays}
                 svg
                 style={{
-                  width: "1.5em",
-                  height: "1.5em",
+                  width: "2em",
+                  height: "2em",
                   borderRadius: "100%",
+                  objectFit: "cover",
                 }}
               />
-              <span className="font-semibold">{c.codeISO}</span>
+              <span className="font-semibold">{c.code_iso}</span>
               <span className="text-gray-500">{c.nom_complet}</span>
             </div>
           ))}

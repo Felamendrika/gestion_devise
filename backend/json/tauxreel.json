@@ -1,0 +1,162 @@
+[
+  {
+    "id": "TR001",
+    "taux_actuel": 0.9187,
+    "taux_precedent": 0.9122,
+    "date_maj": "2025-05-12",
+    "devise_source": "USD",
+    "devise_cible": "EUR"
+  },
+  {
+    "id": "TR002",
+    "taux_actuel": 1.0885,
+    "taux_precedent": 1.0963,
+    "date_maj": "2025-05-12",
+    "devise_source": "EUR",
+    "devise_cible": "USD"
+  },
+  {
+    "id": "TR003",
+    "taux_actuel": 1.26,
+    "taux_precedent": 1.25,
+    "date_maj": "2025-05-12",
+    "devise_source": "GBP",
+    "devise_cible": "USD"
+  },
+  {
+    "id": "TR004",
+    "taux_actuel": 0.89,
+    "taux_precedent": 0.87,
+    "date_maj": "2025-05-12",
+    "devise_source": "AUD",
+    "devise_cible": "CAD"
+  },
+  {
+    "id": "TR005",
+    "taux_actuel": 1.12,
+    "taux_precedent": 1.11,
+    "date_maj": "2025-05-12",
+    "devise_source": "CHF",
+    "devise_cible": "USD"
+  },
+  {
+    "id": "TR006",
+    "taux_actuel": 0.00018,
+    "taux_precedent": 0.00017,
+    "date_maj": "2025-05-12",
+    "devise_source": "MGA",
+    "devise_cible": "EUR"
+  },
+  {
+    "id": "TR007",
+    "taux_actuel": 0.00021,
+    "taux_precedent": 0.0002,
+    "date_maj": "2025-05-12",
+    "devise_source": "MGA",
+    "devise_cible": "USD"
+  },
+  {
+    "id": "TR008",
+    "taux_actuel": 0.0175,
+    "taux_precedent": 0.0172,
+    "date_maj": "2025-05-12",
+    "devise_source": "MGA",
+    "devise_cible": "INR"
+  },
+  {
+    "id": "TR009",
+    "taux_actuel": 0.0305,
+    "taux_precedent": 0.0301,
+    "date_maj": "2025-05-12",
+    "devise_source": "MGA",
+    "devise_cible": "JPY"
+  },
+  {
+    "id": "TR010",
+    "taux_actuel": 0.0014,
+    "taux_precedent": 0.00138,
+    "date_maj": "2025-05-12",
+    "devise_source": "MGA",
+    "devise_cible": "CNY"
+  },
+  {
+    "id": "TR011",
+    "taux_actuel": 0.0068,
+    "taux_precedent": 0.0069,
+    "date_maj": "2025-05-12",
+    "devise_source": "JPY",
+    "devise_cible": "USD"
+  },
+  {
+    "id": "TR012",
+    "taux_actuel": 0.58,
+    "taux_precedent": 0.57,
+    "date_maj": "2025-05-12",
+    "devise_source": "CAD",
+    "devise_cible": "GBP"
+  },
+  {
+    "id": "TR013",
+    "taux_actuel": 0.011,
+    "taux_precedent": 0.0108,
+    "date_maj": "2025-05-12",
+    "devise_source": "INR",
+    "devise_cible": "EUR"
+  },
+  {
+    "id": "TR014",
+    "taux_actuel": 0.14,
+    "taux_precedent": 0.139,
+    "date_maj": "2025-05-12",
+    "devise_source": "CNY",
+    "devise_cible": "USD"
+  },
+  {
+    "id": "TR015",
+    "taux_actuel": 0.86,
+    "taux_precedent": 0.85,
+    "date_maj": "2025-05-12",
+    "devise_source": "EUR",
+    "devise_cible": "GBP"
+  },
+  {
+    "id": "TR016",
+    "taux_actuel": 0.66,
+    "taux_precedent": 0.655,
+    "date_maj": "2025-05-12",
+    "devise_source": "AUD",
+    "devise_cible": "USD"
+  },
+  {
+    "id": "TR017",
+    "taux_actuel": 188.65,
+    "taux_precedent": 187.1,
+    "date_maj": "2025-05-12",
+    "devise_source": "GBP",
+    "devise_cible": "JPY"
+  },
+  {
+    "id": "TR018",
+    "taux_actuel": 1.51,
+    "taux_precedent": 1.48,
+    "date_maj": "2025-05-12",
+    "devise_source": "CHF",
+    "devise_cible": "CAD"
+  },
+  {
+    "id": "TR019",
+    "taux_actuel": 64.75,
+    "taux_precedent": 63.9,
+    "date_maj": "2025-05-12",
+    "devise_source": "INR",
+    "devise_cible": "MGA"
+  },
+  {
+    "id": "TR020",
+    "taux_actuel": 0.128,
+    "taux_precedent": 0.127,
+    "date_maj": "2025-05-12",
+    "devise_source": "CNY",
+    "devise_cible": "EUR"
+  }
+]
