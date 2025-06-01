@@ -5,6 +5,7 @@ import CurrencyConverter from "./components/CurrencyConverter/CurrencyConverter"
 import ExchangeRates from "./components/ExchangeRates/ExchangeRates";
 import LandingPage from "./components/layout/LandingPage";
 import Navbar from "./components/layout/Navbar";
+import Footer from "./components/layout/Footer";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
             <Route path="/exchange-rates" element={<ExchangeRates />} />
           </Routes>
         </main>
+        <Footer />
       </div>
     </Router>
   );

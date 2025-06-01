@@ -7,8 +7,11 @@ import initDB from "../config/db.js";
 const pool = await initDB();
 
 // lecture des fichiers JSON
-const devises = JSON.parse(fs.readFileSync("./json/devise.json"));
-const tauxReel = JSON.parse(fs.readFileSync("./json/tauxreel.json"));
+// const devises = JSON.parse(fs.readFileSync("./json/devise.json"));
+// const tauxReel = JSON.parse(fs.readFileSync("./json/tauxreel.json"));
+
+const devises = JSON.parse(fs.readFileSync("./json/deviseData.json"));
+const tauxReel = JSON.parse(fs.readFileSync("./json/tauxReelData.json"));
 
 async function importDevise() {
   for (const devise of devises) {
@@ -48,12 +51,13 @@ async function importTaux() {
   console.log("✅ Taux importés + marge calcule");
 }
 
-/*importDevise()
-  .then(() => console.log("Donnees importer avec succes"))
-  .catch((err) => console.log("Erreur lors de l'importation des données", err))*/
+importDevise()
+  .then(importTaux)
+  .then(() => console.log("Donnees importer avec succes avec les Taux"))
+  .catch((err) => console.log("Erreur lors de l'importation des données", err));
 
-importTaux()
-  .then(() => console.log("Donnees importer avec succes"))
-  .catch((err) => console.log("Erreur de l'importation des donnees", err));
+// importTaux()
+//   .then(() => console.log("Donnees importer avec succes"))
+//   .catch((err) => console.log("Erreur de l'importation des donnees", err));
 
 // .then(importTaux)

@@ -1,8 +1,10 @@
-import React, { useCallback, useEffect, useState, useContext } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
+import { FaExclamationTriangle } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
 import CurrencyDropdown from "../common/CurrencyDropdown";
 import PopularConversionsTable from "../common/PopularConversionsTable";
+import AvailableCurrenciesSection from "../common/AvailableCurrenciesSection";
 
 // importation contexte
 import { AppContext } from "../../context/AppContext";
@@ -14,13 +16,15 @@ const CurrencyConverter = () => {
   const [convertedAmount, setConvertedAmount] = useState(null);
 
   const [rate, setRate] = useState(null);
-  const [inverseRate, setInverseRate] = useState(null);
+  // const [inverseRate, setInverseRate] = useState(null);
   const [uniteSource, setUniteSource] = useState("");
   const [uniteCible, setUniteCible] = useState("");
 
   const [isConverting, setIsConverting] = useState(false);
   const [isFirstConversion, setIsFirstConversion] = useState(true);
   const [error, setError] = useState(null); // gestion des erreurs
+
+  const [sameCurrencyError, setSameCurrencyError] = useState(false);
 
   const navigate = useNavigate();
 
@@ -45,13 +49,13 @@ const CurrencyConverter = () => {
 
         if (result) {
           setRate(parseFloat(result.taux_vente));
-          setInverseRate(1 / parseFloat(result.taux_vente));
+          // setInverseRate(1 / parseFloat(result.taux_vente));
           setConvertedAmount(parseFloat(result.resultat).toFixed(4));
           setUniteSource(result.unite_source);
           setUniteCible(result.unite_cible);
         } else {
           setRate(null);
-          setInverseRate(null);
+          // setInverseRate(null);
           setConvertedAmount("Taux de change non disponible");
           throw new Error("Taux de conversion indisponible");
         }
@@ -65,14 +69,14 @@ const CurrencyConverter = () => {
 
         setConvertedAmount(null);
         setRate(null);
-        setInverseRate(null);
+        // setInverseRate(null);
         setUniteSource("");
         setUniteCible("");
       }
     } else {
       setConvertedAmount(null);
       setRate(null);
-      setInverseRate(null);
+      // setInverseRate(null);
       setUniteSource("");
       setUniteCible("");
     }
@@ -96,6 +100,15 @@ const CurrencyConverter = () => {
     isFirstConversion,
   ]);
 
+  // Mettre à jour l'état d'erreur quand les devises changent
+  useEffect(() => {
+    if (sourceCurrency && targetCurrency) {
+      setSameCurrencyError(sourceCurrency.code_iso === targetCurrency.code_iso);
+    } else {
+      setSameCurrencyError(false);
+    }
+  }, [sourceCurrency, targetCurrency]);
+
   //conversion manuelle
   const handleConversion = () => {
     setIsConverting(true);
@@ -106,11 +119,50 @@ const CurrencyConverter = () => {
     }, 900);
   };
 
-  // Réinitialiser isFirstConversion quand on change de devise
-  const handleSwapCurrencies = () => {
+  // inverser kes devises
+  const handleSwapCurrencies = async () => {
     setSourceCurrency(targetCurrency);
     setTargetCurrency(sourceCurrency);
-    setIsFirstConversion(true);
+
+    // reinitialiser les etat
+    setConvertedAmount(null);
+    setRate(null);
+    // setInverseRate(null);
+    setUniteCible("");
+    setUniteSource("");
+    setError(null);
+    setIsFirstConversion(false);
+    // relancer la conversion auto si il y a des chnagement
+    setTimeout(() => {
+      if (
+        amount > 0 &&
+        targetCurrency &&
+        sourceCurrency &&
+        targetCurrency.code_iso !== sourceCurrency.code_iso
+      ) {
+        performConversion();
+        setIsFirstConversion(false);
+      }
+    }, 100);
+    // relancer la cinversion si montant deja saisi
+    if (amount > 0) {
+      try {
+        const result = await conversionDevise({
+          montant: amount,
+          source: sourceCurrency.code_iso,
+          cible: targetCurrency.code_iso,
+        });
+        if (result) {
+          setRate(parseFloat(result.taux_vente));
+          setConvertedAmount(parseFloat(result.resultat).toFixed(4));
+          setUniteSource(result.unite_source);
+          setUniteCible(result.unite_cible);
+        }
+      } catch (error) {
+        setError("Erreur lors de la conversion inverse");
+        console.error("Erreur lors de l'inversion ", error);
+      }
+    }
   };
 
   // suivre les taux de change
@@ -126,12 +178,14 @@ const CurrencyConverter = () => {
     !targetCurrency ||
     sourceCurrency.code_iso === targetCurrency.code_iso;
 
-  const popularValues = [1, 5, 10, 25, 50, 100, 250, 500, 1000, 5000, 10000];
+  const popularValues = [
+    1, 5, 10, 25, 50, 100, 250, 500, 1000, 5000, 10000, 50000,
+  ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white w-full pt-16">
+    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white w-full pt-12">
       <div className="text-center max-3xl px-12 py-12 sm:py-20 mb-0">
-        <h1 className="text-3xl md:text-5xl font-bold text-gray-900">
+        <h1 className="text-3xl md:text-5xl font-bold text-gray-800">
           Convertisseur de Devises
         </h1>
       </div>
@@ -154,7 +208,11 @@ const CurrencyConverter = () => {
               type="number"
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
-              className="w-full h-12 p-2 border rounded-md focus:ring-2 focus:ring-blue-100 focus:border-blue-100 focus:outline-none outline-none"
+              className={`w-full h-12 p-2 border rounded-md focus:ring-2 focus:ring-blue-100 focus:border-blue-100 focus:outline-none outline-none ${
+                amount && (isNaN(amount) || Number(amount) <= 0)
+                  ? "border-red-300"
+                  : "border-gray-300"
+              }`}
               placeholder="Entrez le montant"
               min={0}
             />
@@ -246,6 +304,18 @@ const CurrencyConverter = () => {
             Suivre les taux de change →
           </button>
         </div>
+
+        {/* Message d'erreur pour les devises identiques */}
+        {sameCurrencyError && (
+          <div className="mt-4 text-red-500 font-medium text-center flex items-center justify-center">
+            <FaExclamationTriangle className="mr-2" />
+            <span>
+              Veuillez sélectionner deux devises différentes pour effectuer une
+              conversion
+            </span>
+          </div>
+        )}
+
         {/* Message d'erreur si API echoue */}
         {error && (
           <div className="mt-4 text-red-500 font-medium text-center">
@@ -301,7 +371,7 @@ const CurrencyConverter = () => {
       {convertedAmount && rate && sourceCurrency && targetCurrency && (
         <div className="max-w-6xl mx-auto mt-12 mb-8 flex flex-col md:flex-row gap-8 justify-center">
           <div className="flex-1">
-            <h3 className="text-lg font-bold text-center text-gray-600 mb-2">
+            <h3 className="text-lg font-bold text-center text-gray-500 mb-4">
               {`Conversions populaires de ${sourceCurrency.nom_complet} vers ${targetCurrency.nom_complet}`}
             </h3>
             <PopularConversionsTable
@@ -312,7 +382,7 @@ const CurrencyConverter = () => {
             />
           </div>
           <div className="flex-1">
-            <h3 className="text-lg font-bold text-center text-gray-600 mb-2">
+            <h3 className="text-lg font-bold text-center text-gray-500 mb-4">
               {`Conversions populaires de ${targetCurrency.nom_complet} vers ${sourceCurrency.nom_complet}`}
             </h3>
             <PopularConversionsTable
@@ -325,6 +395,11 @@ const CurrencyConverter = () => {
           </div>
         </div>
       )}
+
+      {/* Section pour la liste de devises disponibles */}
+      <div className="w-full bg-white py-16 mt-8">
+        <AvailableCurrenciesSection currencies={devises} />
+      </div>
     </div>
   );
 };

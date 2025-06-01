@@ -1,0 +1,562 @@
+[
+  {
+    "id": "TR001",
+    "taux_actuel": 0.9235,
+    "taux_precedent": 0.9271,
+    "date_maj": "2024-05-24",
+    "devise_source": "USD",
+    "devise_cible": "EUR"
+  },
+  {
+    "id": "TR002",
+    "taux_actuel": 156.8734,
+    "taux_precedent": 156.215,
+    "date_maj": "2024-05-24",
+    "devise_source": "USD",
+    "devise_cible": "JPY"
+  },
+  {
+    "id": "TR003",
+    "taux_actuel": 1.2718,
+    "taux_precedent": 1.2593,
+    "date_maj": "2024-05-24",
+    "devise_source": "USD",
+    "devise_cible": "GBP"
+  },
+  {
+    "id": "TR004",
+    "taux_actuel": 1.3689,
+    "taux_precedent": 1.3725,
+    "date_maj": "2024-05-24",
+    "devise_source": "USD",
+    "devise_cible": "CAD"
+  },
+  {
+    "id": "TR005",
+    "taux_actuel": 0.9147,
+    "taux_precedent": 0.9182,
+    "date_maj": "2024-05-24",
+    "devise_source": "USD",
+    "devise_cible": "CHF"
+  },
+  {
+    "id": "TR006",
+    "taux_actuel": 0.6835,
+    "taux_precedent": 0.6872,
+    "date_maj": "2024-05-24",
+    "devise_source": "EUR",
+    "devise_cible": "GBP"
+  },
+  {
+    "id": "TR007",
+    "taux_actuel": 169.3421,
+    "taux_precedent": 168.7518,
+    "date_maj": "2024-05-24",
+    "devise_source": "EUR",
+    "devise_cible": "JPY"
+  },
+  {
+    "id": "TR008",
+    "taux_actuel": 1.4658,
+    "taux_precedent": 1.4583,
+    "date_maj": "2024-05-24",
+    "devise_source": "GBP",
+    "devise_cible": "AUD"
+  },
+  {
+    "id": "TR009",
+    "taux_actuel": 7.2418,
+    "taux_precedent": 7.1985,
+    "date_maj": "2024-05-24",
+    "devise_source": "USD",
+    "devise_cible": "CNY"
+  },
+  {
+    "id": "TR010",
+    "taux_actuel": 1.0915,
+    "taux_precedent": 1.0982,
+    "date_maj": "2024-05-24",
+    "devise_source": "AUD",
+    "devise_cible": "USD"
+  },
+  {
+    "id": "TR011",
+    "taux_actuel": 0.8547,
+    "taux_precedent": 0.8512,
+    "date_maj": "2024-05-24",
+    "devise_source": "NZD",
+    "devise_cible": "USD"
+  },
+  {
+    "id": "TR012",
+    "taux_actuel": 18.4235,
+    "taux_precedent": 18.5127,
+    "date_maj": "2024-05-24",
+    "devise_source": "USD",
+    "devise_cible": "ZAR"
+  },
+  {
+    "id": "TR013",
+    "taux_actuel": 83.4125,
+    "taux_precedent": 83.7812,
+    "date_maj": "2024-05-24",
+    "devise_source": "EUR",
+    "devise_cible": "JPY"
+  },
+  {
+    "id": "TR014",
+    "taux_actuel": 1.0983,
+    "taux_precedent": 1.0927,
+    "date_maj": "2024-05-24",
+    "devise_source": "EUR",
+    "devise_cible": "CHF"
+  },
+  {
+    "id": "TR015",
+    "taux_actuel": 0.7908,
+    "taux_precedent": 0.7952,
+    "date_maj": "2024-05-24",
+    "devise_source": "GBP",
+    "devise_cible": "EUR"
+  },
+  {
+    "id": "TR016",
+    "taux_actuel": 1.3617,
+    "taux_precedent": 1.3528,
+    "date_maj": "2024-05-24",
+    "devise_source": "EUR",
+    "devise_cible": "AUD"
+  },
+  {
+    "id": "TR017",
+    "taux_actuel": 0.5837,
+    "taux_precedent": 0.5782,
+    "date_maj": "2024-05-24",
+    "devise_source": "GBP",
+    "devise_cible": "CHF"
+  },
+  {
+    "id": "TR018",
+    "taux_actuel": 1.1218,
+    "taux_precedent": 1.1153,
+    "date_maj": "2024-05-24",
+    "devise_source": "AUD",
+    "devise_cible": "NZD"
+  },
+  {
+    "id": "TR019",
+    "taux_actuel": 0.8526,
+    "taux_precedent": 0.8471,
+    "date_maj": "2024-05-24",
+    "devise_source": "EUR",
+    "devise_cible": "NZD"
+  },
+  {
+    "id": "TR020",
+    "taux_actuel": 1.4519,
+    "taux_precedent": 1.4385,
+    "date_maj": "2024-05-24",
+    "devise_source": "GBP",
+    "devise_cible": "NZD"
+  },
+  {
+    "id": "TR021",
+    "taux_actuel": 5.1237,
+    "taux_precedent": 5.0812,
+    "date_maj": "2024-05-24",
+    "devise_source": "USD",
+    "devise_cible": "BRL"
+  },
+  {
+    "id": "TR022",
+    "taux_actuel": 3.6715,
+    "taux_precedent": 3.6827,
+    "date_maj": "2024-05-24",
+    "devise_source": "USD",
+    "devise_cible": "AED"
+  },
+  {
+    "id": "TR023",
+    "taux_actuel": 91.2375,
+    "taux_precedent": 91.5812,
+    "date_maj": "2024-05-24",
+    "devise_source": "USD",
+    "devise_cible": "INR"
+  },
+  {
+    "id": "TR024",
+    "taux_actuel": 1357.82,
+    "taux_precedent": 1348.75,
+    "date_maj": "2024-05-24",
+    "devise_source": "USD",
+    "devise_cible": "KRW"
+  },
+  {
+    "id": "TR025",
+    "taux_actuel": 92.4512,
+    "taux_precedent": 92.7815,
+    "date_maj": "2024-05-24",
+    "devise_source": "EUR",
+    "devise_cible": "INR"
+  },
+  {
+    "id": "TR026",
+    "taux_actuel": 0.6807,
+    "taux_precedent": 0.6752,
+    "date_maj": "2024-05-24",
+    "devise_source": "EUR",
+    "devise_cible": "CAD"
+  },
+  {
+    "id": "TR027",
+    "taux_actuel": 1.1825,
+    "taux_precedent": 1.1728,
+    "date_maj": "2024-05-24",
+    "devise_source": "GBP",
+    "devise_cible": "NZD"
+  },
+  {
+    "id": "TR028",
+    "taux_actuel": 1.6027,
+    "taux_precedent": 1.5921,
+    "date_maj": "2024-05-24",
+    "devise_source": "EUR",
+    "devise_cible": "SGD"
+  },
+  {
+    "id": "TR029",
+    "taux_actuel": 1.3018,
+    "taux_precedent": 1.3125,
+    "date_maj": "2024-05-24",
+    "devise_source": "CAD",
+    "devise_cible": "AUD"
+  },
+  {
+    "id": "TR030",
+    "taux_actuel": 1.0475,
+    "taux_precedent": 1.0528,
+    "date_maj": "2024-05-24",
+    "devise_source": "SGD",
+    "devise_cible": "USD"
+  },
+  {
+    "id": "TR031",
+    "taux_actuel": 1.7458,
+    "taux_precedent": 1.7321,
+    "date_maj": "2024-05-24",
+    "devise_source": "EUR",
+    "devise_cible": "RUB"
+  },
+  {
+    "id": "TR032",
+    "taux_actuel": 1.6475,
+    "taux_precedent": 1.6382,
+    "date_maj": "2024-05-24",
+    "devise_source": "AUD",
+    "devise_cible": "NZD"
+  },
+  {
+    "id": "TR033",
+    "taux_actuel": 1.8517,
+    "taux_precedent": 1.8423,
+    "date_maj": "2024-05-24",
+    "devise_source": "GBP",
+    "devise_cible": "SGD"
+  },
+  {
+    "id": "TR034",
+    "taux_actuel": 0.5918,
+    "taux_precedent": 0.5872,
+    "date_maj": "2024-05-24",
+    "devise_source": "CHF",
+    "devise_cible": "JPY"
+  },
+  {
+    "id": "TR035",
+    "taux_actuel": 1.4172,
+    "taux_precedent": 1.4285,
+    "date_maj": "2024-05-24",
+    "devise_source": "USD",
+    "devise_cible": "RUB"
+  },
+  {
+    "id": "TR036",
+    "taux_actuel": 0.7347,
+    "taux_precedent": 0.7412,
+    "date_maj": "2024-05-24",
+    "devise_source": "GBP",
+    "devise_cible": "CAD"
+  },
+  {
+    "id": "TR037",
+    "taux_actuel": 1.2587,
+    "taux_precedent": 1.2512,
+    "date_maj": "2024-05-24",
+    "devise_source": "NZD",
+    "devise_cible": "EUR"
+  },
+  {
+    "id": "TR038",
+    "taux_actuel": 0.8715,
+    "taux_precedent": 0.8652,
+    "date_maj": "2024-05-24",
+    "devise_source": "CAD",
+    "devise_cible": "CHF"
+  },
+  {
+    "id": "TR039",
+    "taux_actuel": 1.5387,
+    "taux_precedent": 1.5271,
+    "date_maj": "2024-05-24",
+    "devise_source": "EUR",
+    "devise_cible": "BRL"
+  },
+  {
+    "id": "TR040",
+    "taux_actuel": 0.9225,
+    "taux_precedent": 0.9178,
+    "date_maj": "2024-05-24",
+    "devise_source": "AUD",
+    "devise_cible": "JPY"
+  },
+  {
+    "id": "TR041",
+    "taux_actuel": 1.6718,
+    "taux_precedent": 1.6825,
+    "date_maj": "2024-05-24",
+    "devise_source": "USD",
+    "devise_cible": "SGD"
+  },
+  {
+    "id": "TR042",
+    "taux_actuel": 0.7837,
+    "taux_precedent": 0.7782,
+    "date_maj": "2024-05-24",
+    "devise_source": "NZD",
+    "devise_cible": "CHF"
+  },
+  {
+    "id": "TR043",
+    "taux_actuel": 1.4275,
+    "taux_precedent": 1.4182,
+    "date_maj": "2024-05-24",
+    "devise_source": "GBP",
+    "devise_cible": "AUD"
+  },
+  {
+    "id": "TR044",
+    "taux_actuel": 0.6527,
+    "taux_precedent": 0.6482,
+    "date_maj": "2024-05-24",
+    "devise_source": "CHF",
+    "devise_cible": "USD"
+  },
+  {
+    "id": "TR045",
+    "taux_actuel": 1.3847,
+    "taux_precedent": 1.3921,
+    "date_maj": "2024-05-24",
+    "devise_source": "AUD",
+    "devise_cible": "CAD"
+  },
+  {
+    "id": "TR046",
+    "taux_actuel": 0.9415,
+    "taux_precedent": 0.9478,
+    "date_maj": "2024-05-24",
+    "devise_source": "EUR",
+    "devise_cible": "ZAR"
+  },
+  {
+    "id": "TR047",
+    "taux_actuel": 1.5718,
+    "taux_precedent": 1.5625,
+    "date_maj": "2024-05-24",
+    "devise_source": "NZD",
+    "devise_cible": "AUD"
+  },
+  {
+    "id": "TR048",
+    "taux_actuel": 0.8117,
+    "taux_precedent": 0.8052,
+    "date_maj": "2024-05-24",
+    "devise_source": "CAD",
+    "devise_cible": "JPY"
+  },
+  {
+    "id": "TR049",
+    "taux_actuel": 1.2387,
+    "taux_precedent": 1.2312,
+    "date_maj": "2024-05-24",
+    "devise_source": "GBP",
+    "devise_cible": "CHF"
+  },
+  {
+    "id": "TR050",
+    "taux_actuel": 0.7257,
+    "taux_precedent": 0.7182,
+    "date_maj": "2024-05-24",
+    "devise_source": "AUD",
+    "devise_cible": "CHF"
+  },
+  {
+    "id": "TR051",
+    "taux_actuel": 4592.5,
+    "taux_precedent": 4537.8,
+    "date_maj": "2024-05-24",
+    "devise_source": "USD",
+    "devise_cible": "MGA"
+  },
+  {
+    "id": "TR052",
+    "taux_actuel": 0.000217,
+    "taux_precedent": 0.000221,
+    "date_maj": "2024-05-24",
+    "devise_source": "MGA",
+    "devise_cible": "USD"
+  },
+  {
+    "id": "TR053",
+    "taux_actuel": 5000.0,
+    "taux_precedent": 4950.5,
+    "date_maj": "2024-05-24",
+    "devise_source": "EUR",
+    "devise_cible": "MGA"
+  },
+  {
+    "id": "TR054",
+    "taux_actuel": 0.0002,
+    "taux_precedent": 0.000205,
+    "date_maj": "2024-05-24",
+    "devise_source": "MGA",
+    "devise_cible": "EUR"
+  },
+  {
+    "id": "TR055",
+    "taux_actuel": 7.0,
+    "taux_precedent": 6.95,
+    "date_maj": "2024-05-24",
+    "devise_source": "MGA",
+    "devise_cible": "JPY"
+  },
+  {
+    "id": "TR056",
+    "taux_actuel": 6.5,
+    "taux_precedent": 6.45,
+    "date_maj": "2024-05-24",
+    "devise_source": "MGA",
+    "devise_cible": "GBP"
+  },
+  {
+    "id": "TR057",
+    "taux_actuel": 0.00021,
+    "taux_precedent": 0.000215,
+    "date_maj": "2024-05-24",
+    "devise_source": "MGA",
+    "devise_cible": "CAD"
+  },
+  {
+    "id": "TR058",
+    "taux_actuel": 5300.0,
+    "taux_precedent": 5250.5,
+    "date_maj": "2024-05-24",
+    "devise_source": "GBP",
+    "devise_cible": "MGA"
+  },
+  {
+    "id": "TR059",
+    "taux_actuel": 0.00018,
+    "taux_precedent": 0.000185,
+    "date_maj": "2024-05-24",
+    "devise_source": "MGA",
+    "devise_cible": "AUD"
+  },
+  {
+    "id": "TR060",
+    "taux_actuel": 4500.0,
+    "taux_precedent": 4450.5,
+    "date_maj": "2024-05-24",
+    "devise_source": "CHF",
+    "devise_cible": "MGA"
+  },
+  {
+    "id": "TR061",
+    "taux_actuel": 0.00019,
+    "taux_precedent": 0.000195,
+    "date_maj": "2024-05-24",
+    "devise_source": "MGA",
+    "devise_cible": "INR"
+  },
+  {
+    "id": "TR062",
+    "taux_actuel": 4900.0,
+    "taux_precedent": 4850.5,
+    "date_maj": "2024-05-24",
+    "devise_source": "JPY",
+    "devise_cible": "MGA"
+  },
+  {
+    "id": "TR063",
+    "taux_actuel": 0.00025,
+    "taux_precedent": 0.000255,
+    "date_maj": "2024-05-24",
+    "devise_source": "MGA",
+    "devise_cible": "ZAR"
+  },
+  {
+    "id": "TR064",
+    "taux_actuel": 5100.0,
+    "taux_precedent": 5050.5,
+    "date_maj": "2024-05-24",
+    "devise_source": "CNY",
+    "devise_cible": "MGA"
+  },
+  {
+    "id": "TR065",
+    "taux_actuel": 0.00017,
+    "taux_precedent": 0.000175,
+    "date_maj": "2024-05-24",
+    "devise_source": "MGA",
+    "devise_cible": "KRW"
+  },
+  {
+    "id": "TR066",
+    "taux_actuel": 0.00015,
+    "taux_precedent": 0.000155,
+    "date_maj": "2024-05-24",
+    "devise_source": "MGA",
+    "devise_cible": "AED"
+  },
+  {
+    "id": "TR067",
+    "taux_actuel": 0.00023,
+    "taux_precedent": 0.000235,
+    "date_maj": "2024-05-24",
+    "devise_source": "MGA",
+    "devise_cible": "BRL"
+  },
+  {
+    "id": "TR068",
+    "taux_actuel": 0.0002,
+    "taux_precedent": 0.000205,
+    "date_maj": "2024-05-24",
+    "devise_source": "MGA",
+    "devise_cible": "RUB"
+  },
+  {
+    "id": "TR069",
+    "taux_actuel": 5400.0,
+    "taux_precedent": 5350.5,
+    "date_maj": "2024-05-24",
+    "devise_source": "AUD",
+    "devise_cible": "MGA"
+  },
+  {
+    "id": "TR070",
+    "taux_actuel": 0.00022,
+    "taux_precedent": 0.000225,
+    "date_maj": "2024-05-24",
+    "devise_source": "MGA",
+    "devise_cible": "SGD"
+  }
+]

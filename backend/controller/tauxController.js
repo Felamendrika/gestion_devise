@@ -1,4 +1,6 @@
-import popularPaire from "../constants/popularPaire.js";
+// import popularPaire from "../constants/popularPaire.js";
+
+import populairePaire from "../constants/populairePaire.js";
 import TauxModel from "../model/tauxModel.js";
 
 class TauxController {
@@ -91,6 +93,7 @@ class TauxController {
         taux_achat: taux.taux_achat,
         unite_source: unite_source,
         unite_cible: unite_cible,
+        is_inverse: taux.devise_source !== source, // indique si le taux est inverser ou non
       });
     } catch (error) {
       res.status(500).json({
@@ -143,7 +146,7 @@ class TauxController {
       // recuperer les taux pour chaque paire
       const pairAvecMarge = (
         await Promise.all(
-          popularPaire.map(async (pair) => {
+          populairePaire.map(async (pair) => {
             const tauxReel = await TauxModel.getTauxReel(
               pair.source,
               pair.cible

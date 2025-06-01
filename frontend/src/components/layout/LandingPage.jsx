@@ -26,9 +26,10 @@ const LandingPage = () => {
                 </span>
               </h1>
               <p className="mt-6 text-xl text-gray-500 leading-relaxed">
-                Taux de change en temps réel, conversions instantanées et suivi
-                des fluctuations pour une gestion optimale de vos opérations de
-                change.
+                Consultez l'ensemble des informations, des outils et des
+                actualités sur les devises : Taux de change en temps réel,
+                conversions instantanées et suivi des fluctuations pour une
+                gestion optimale de vos opérations de change.
               </p>
               <div className="mt-10">
                 <Link
@@ -157,7 +158,7 @@ const LandingPage = () => {
           </p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* Étape 1 */}
-            <div className="bg-white rounded-3xl shadow-lg p-8 flex flex-col items-center hover:shadow-2xl transition duration-300">
+            <div className="bg-white rounded-3xl shadow-lg p-8 flex flex-col items-center hover:shadow-2xl hover:cursor-default transition duration-300">
               <div className="text-blue-600 text-5xl font-extrabold mb-4">
                 1
               </div>
@@ -170,7 +171,7 @@ const LandingPage = () => {
               </p>
             </div>
             {/* Étape 2 */}
-            <div className="bg-blue-50 rounded-3xl shadow-lg p-8 flex flex-col items-center hover:shadow-2xl transition duration-300">
+            <div className="bg-blue-50 rounded-3xl shadow-lg p-8 flex flex-col items-center hover:shadow-2xl hover:cursor-default transition duration-300">
               <div className="text-blue-600 text-5xl font-extrabold mb-4">
                 2
               </div>
@@ -183,7 +184,7 @@ const LandingPage = () => {
               </p>
             </div>
             {/* Étape 3 */}
-            <div className="bg-white rounded-3xl shadow-lg p-8 flex flex-col items-center hover:shadow-2xl transition duration-300">
+            <div className="bg-white rounded-3xl shadow-lg p-8 flex flex-col items-center hover:shadow-2xl hover:cursor-pointer transition duration-300">
               <div className="text-blue-600 text-5xl font-extrabold mb-4">
                 3
               </div>

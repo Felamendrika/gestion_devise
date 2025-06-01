@@ -34,16 +34,19 @@ const ExchangeRates = () => {
       for (const currency of trackedCurrencies) {
         const key = `${sourceCurrency.code_iso}_${currency.code_iso}`;
         try {
+          //recup les taux pour l'affichage et calcul du montant d'1 unite de devise source
           const [tauxReel, tauxMarge, fluct] = await Promise.all([
             fetchTauxReel(sourceCurrency.code_iso, currency.code_iso),
             fetchTauxAvecMarge(sourceCurrency.code_iso, currency.code_iso),
             fetchFluctuation(sourceCurrency.code_iso, currency.code_iso),
           ]);
 
+          //MAj des etats avec les valeurs calculee
           setRealRates((prev) => ({
             ...prev,
             [key]: tauxReel?.taux_actuel ?? "—",
           }));
+
           setMontants((prev) => ({
             ...prev,
             [key]: tauxMarge ? (1 * tauxMarge.taux_vente).toFixed(4) : "—",
@@ -121,13 +124,14 @@ const ExchangeRates = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white w-full pt-16">
       <div className="max-w-5xl mx-auto px-4 py-12">
-        <div className="mb-12">
+        <div className="mb-6">
           <h1 className="text-4xl font-extrabold text-gray-900 mb-2">
             Taux de change réels
           </h1>
           <p className="text-lg text-gray-600">
             Suivez en temps réel l'évolution des taux de change de vos devises
-            préférées
+            préférées.Vous pouvez choisir votre propre liste de paire de devises
+            favories
           </p>
         </div>
 
@@ -192,7 +196,7 @@ const ExchangeRates = () => {
                     </div>
                   ) : (
                     <span className="text-gray-400">
-                      Sélectionnez une devise source
+                      Sélectionnez une devise cible
                     </span>
                   )}
                 </td>
@@ -266,7 +270,7 @@ const ExchangeRates = () => {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <button
-                        className="text-red-600 hover:text-red-900 font-medium"
+                        className="text-red-600 hover:text-red-900 hover:cursor-pointer font-medium"
                         onClick={() => handleDeleteCurrency(currency.code_iso)}
                       >
                         Supprimer
@@ -358,11 +362,14 @@ const ExchangeRates = () => {
         <div className="mt-16">
           <div className="flex items-center justify-between mb-8">
             <div>
-              <h2 className="text-2xl font-bold text-gray-800 mb-2">
+              <h2 className="text-3xl font-extrabold text-gray-700 mb-2">
                 Taux de change populaires
               </h2>
               <p className="text-gray-600">
-                Les paires de devises les plus suivies sur le marché
+                Le taux de change d'une devise est le cours de cette devise par
+                rapport à une autre, appelé également parité d'une monnaie.
+                Retrouvez ici les taux de change des paires de devises les plus
+                suivies sur le marché
               </p>
             </div>
           </div>
@@ -413,14 +420,85 @@ const ExchangeRates = () => {
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-gray-500">
                           {pair.date_maj
-                            ? new Date(pair.date_maj).toLocaleDateString()
+                            ? new Date(pair.date_maj)
+                                .toLocaleDateString("fr-FR", {
+                                  day: "2-digit",
+                                  month: "2-digit",
+                                  year: "numeric",
+                                })
+                                .replace(/\//g, "-")
                             : "—"}
                         </td>
+                        {/* <td className="px-6 py-4 whitespace-nowrap text-gray-500">
+                          {pair.date_maj
+                            ? new Date(pair.date_maj).toLocaleDateString()
+                            : "—"}
+                        </td> */}
                       </tr>
                     );
                   })}
                 </tbody>
               </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Section information sur les taux de change */}
+      <div className="w-full bg-gradient-to-r from-blue-50 to-white py-16">
+        <div className="max-w-6xl mx-auto px-4">
+          <h2 className="text-3xl md:text-4xl font-extrabold text-center text-gray-500 mb-2 tracking-tight">
+            Informations sur les taux de change
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {/* !ere info */}
+            <div className="bg-white rounded-2xl shadow-xl p-6 mt-10 flex flex-col items-center hover:shadow-2xl transition duration-300">
+              <div className="text-blue-600 text-5xl font-extrabold mb-4">
+                1
+              </div>
+              <h3 className="text-xl font-bold mb-2 text-gray-900">
+                Méfiez-vous des mauvais taux de change
+              </h3>
+              <p className="text-gray-600 mb-2">
+                Les banques et les prestataires traditionnels ont souvent des
+                coûts supplémentaires qu'ils cachent dans le taux qui vous est
+                proposé. Notre technologie intelligente signifie que nous sommes
+                plus efficaces et que vous obtenez un excellent taux. À chaque
+                fois.
+              </p>
+            </div>
+
+            {/* 2eme info */}
+            <div className="bg-blue-50 rounded-2xl shadow-xl p-6 mt-10 flex flex-col items-center hover:shadow-2xl hover:cursor-default transition duration-300">
+              <div className="text-blue-600 text-5xl font-extrabold mb-4">
+                2
+              </div>
+              <h3 className="text-xl font-bold mb-2 text-gray-900">
+                Convention et fiabilite sur les taux de change
+              </h3>
+              <p className="text-gray-600 ">
+                Tous les chiffres sont des taux moyens du marché, qui ne sont
+                pas disponibles pour les consommateurs et sont fournis à titre
+                informatif uniquement.
+              </p>
+            </div>
+
+            {/* 3eme info */}
+            <div className="bg-white rounded-2xl shadow-xl p-6 mt-10 flex flex-col items-center hover:shadow-2xl transition duration-300">
+              <div className="text-blue-600 text-5xl font-extrabold mb-4">
+                3
+              </div>
+              <h3 className="text-xl font-bold mb-2 text-gray-900">
+                Variation du marché des taux de change
+              </h3>
+              <p className="text-gray-600">
+                Les taux de change, cotés sur le marché des devises appelé
+                "Forex", varient en permanence en fonction des échanges et de la
+                place de cotation. Le taux de change est déterminé par l'offre
+                et la demande de chacune des deux monnaies : si la demande de la
+                première monnaie dépasse l'offre, son cours augmente par rapport
+                à la seconde monnaie
+              </p>
             </div>
           </div>
         </div>

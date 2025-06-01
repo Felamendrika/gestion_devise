@@ -23,7 +23,8 @@ const initDB = async () => {
     host: "localhost",
     user: "root",
     password: "",
-    database: "currency_db",
+    database: "gestionDevise",
+    // database: "currency_db",
   });
 
   //creation de table si ils n'existe pas
@@ -47,8 +48,8 @@ const initDB = async () => {
       devise_source VARCHAR(3) NOT NULL,
       devise_cible VARCHAR(3) NOT NULL,
       PRIMARY KEY (id),
-      CONSTRAINT fk_devise_source FOREIGN KEY (devise_source) REFERENCES devise(code_iso),
-      CONSTRAINT fk_devise_cible FOREIGN KEY (devise_cible) REFERENCES devise(code_iso)
+      CONSTRAINT fk_devise_source FOREIGN KEY (devise_source) REFERENCES devise(code_iso) ON DELETE CASCADE,
+      CONSTRAINT fk_devise_cible FOREIGN KEY (devise_cible) REFERENCES devise(code_iso) ON DELETE CASCADE
     )
   `);
 
@@ -61,9 +62,9 @@ const initDB = async () => {
       taux_achat DECIMAL(18, 5) NOT NULL,
       date_maj DATETIME NOT NULL,
       idTauxReel VARCHAR(10) NOT NULL,
-      FOREIGN KEY (idTauxReel) REFERENCES tauxreel(id),
-      CONSTRAINT fk_source FOREIGN KEY (devise_source) REFERENCES devise(code_iso),
-      CONSTRAINT fk_cible FOREIGN KEY (devise_cible) REFERENCES devise(code_iso)
+      FOREIGN KEY (idTauxReel) REFERENCES tauxreel(id) ON DELETE CASCADE,
+      CONSTRAINT fk_source FOREIGN KEY (devise_source) REFERENCES devise(code_iso) ON DELETE CASCADE,
+      CONSTRAINT fk_cible FOREIGN KEY (devise_cible) REFERENCES devise(code_iso) ON DELETE CASCADE
     ) 
   `);
 
