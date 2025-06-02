@@ -92,13 +92,13 @@
   {
     "code_iso": "NZD",
     "nom_complet": "Dollar Néo-Zélandais",
-    "symbole": "NZ",
+    "symbole": "$",
     "code_pays": "NZ"
   },
   {
     "code_iso": "SGD",
     "nom_complet": "Dollar Singaporien",
-    "symbole": "SG",
+    "symbole": "S$",
     "code_pays": "SG"
   }
 ]

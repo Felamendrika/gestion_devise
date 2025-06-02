@@ -1,10 +1,23 @@
-import React, { useEffect, useRef, useState, useContext } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import ReactCountryFlag from "react-country-flag";
 
 import CurrencyDropdown from "../common/CurrencyDropdown";
 
 // importation contexte
 import { AppContext } from "../../context/AppContext";
+
+// Ajout des styles pour les fluctuations
+const getFluctuationStyle = (fluct) => {
+  if (fluct === null || isNaN(fluct)) return "text-gray-400";
+  return fluct >= 0
+    ? "text-green-600 bg-green-50 px-2 py-1 rounded-full"
+    : "text-red-600 bg-red-50 px-2 py-1 rounded-full";
+};
+
+// Composant pour l'animation de chargement
+const LoadingSpinner = () => (
+  <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-blue-600"></div>
+);
 
 const ExchangeRates = () => {
   const [sourceCurrency, setSourceCurrency] = useState(null);
@@ -149,7 +162,7 @@ const ExchangeRates = () => {
         </div>
 
         {/* Tableau de suivi des taux */}
-        <div className="bg-white rounded-2xl shadow-xl overflow-hidden mb-10">
+        <div className="bg-white rounded-2xl shadow-xl overflow-hidden mb-10 transition-all duration-300 hover:shadow-2xl">
           <table className="w-full">
             <thead>
               <tr className="bg-gray-50">
@@ -166,7 +179,7 @@ const ExchangeRates = () => {
                   Fluctuation (24h)
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  {/* Action */}
+                  Action
                 </th>
               </tr>
             </thead>
@@ -217,7 +230,7 @@ const ExchangeRates = () => {
                 return (
                   <tr
                     key={currency.code_iso}
-                    className="hover:bg-gray-50 hover:cursor-default"
+                    className="hover:bg-gray-50 transition-colors duration-200"
                   >
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="flex items-center">
@@ -251,18 +264,14 @@ const ExchangeRates = () => {
                         <span className="text-gray-400">—</span>
                       ) : (
                         <span
-                          className={
-                            fluct >= 0 ? "text-green-600" : "text-red-600"
-                          }
+                          className={`inline-flex items-center ${getFluctuationStyle(
+                            fluct
+                          )}`}
                         >
                           {fluct >= 0 ? (
-                            <span className="inline-block mr-1 align-middle">
-                              ▲
-                            </span>
+                            <span className="mr-1">▲</span>
                           ) : (
-                            <span className="inline-block mr-1 align-middle">
-                              ▼
-                            </span>
+                            <span className="mr-1">▼</span>
                           )}
                           {Math.abs(fluct).toFixed(4)}%
                         </span>
@@ -270,8 +279,8 @@ const ExchangeRates = () => {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <button
-                        className="text-red-600 hover:text-red-900 hover:cursor-pointer font-medium"
                         onClick={() => handleDeleteCurrency(currency.code_iso)}
+                        className="text-red-600 hover:text-red-900 hover:bg-red-50 px-3 py-1 rounded-full transition-colors duration-200"
                       >
                         Supprimer
                       </button>
@@ -373,7 +382,7 @@ const ExchangeRates = () => {
               </p>
             </div>
           </div>
-          <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
+          <div className="bg-white rounded-2xl shadow-xl overflow-hidden transition-all duration-300 hover:shadow-2xl">
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead>
@@ -404,10 +413,12 @@ const ExchangeRates = () => {
                     return (
                       <tr
                         key={idx}
-                        className="hover:bg-gray-50 hover:cursor-default transition-colors"
+                        className="hover:bg-gray-50 transition-colors duration-200"
                       >
                         <td className="px-6 py-4 whitespace-nowrap">
-                          {pair.source} / {pair.cible}
+                          <span className="font-semibold">{pair.source}</span>
+                          <span className="mx-2 text-gray-400">/</span>
+                          <span className="font-semibold">{pair.cible}</span>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap font-medium text-blue-500">
                           {pair.taux_reel ?? "—"}
@@ -425,6 +436,8 @@ const ExchangeRates = () => {
                                   day: "2-digit",
                                   month: "2-digit",
                                   year: "numeric",
+                                  hour: "2-digit",
+                                  minute: "2-digit",
                                 })
                                 .replace(/\//g, "-")
                             : "—"}
@@ -452,7 +465,7 @@ const ExchangeRates = () => {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {/* !ere info */}
-            <div className="bg-white rounded-2xl shadow-xl p-6 mt-10 flex flex-col items-center hover:shadow-2xl transition duration-300">
+            <div className="bg-white rounded-2xl shadow-xl p-6 mt-10 flex flex-col items-center hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
               <div className="text-blue-600 text-5xl font-extrabold mb-4">
                 1
               </div>

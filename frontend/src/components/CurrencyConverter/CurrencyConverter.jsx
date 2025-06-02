@@ -1,10 +1,10 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
-import { FaExclamationTriangle } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
-import CurrencyDropdown from "../common/CurrencyDropdown";
-import PopularConversionsTable from "../common/PopularConversionsTable";
 import AvailableCurrenciesSection from "../common/AvailableCurrenciesSection";
+import CurrencyDropdown from "../common/CurrencyDropdown";
+import ErrorAlert from "../common/ErrorAlert";
+import PopularConversionsTable from "../common/PopularConversionsTable";
 
 // importation contexte
 import { AppContext } from "../../context/AppContext";
@@ -127,7 +127,6 @@ const CurrencyConverter = () => {
     // reinitialiser les etat
     setConvertedAmount(null);
     setRate(null);
-    // setInverseRate(null);
     setUniteCible("");
     setUniteSource("");
     setError(null);
@@ -182,6 +181,20 @@ const CurrencyConverter = () => {
     1, 5, 10, 25, 50, 100, 250, 500, 1000, 5000, 10000, 50000,
   ];
 
+  // Détermination du message d'erreur à afficher (priorité)
+  const getErrorMessage = () => {
+    if (sameCurrencyError) {
+      return "Veuillez sélectionner deux devises différentes pour effectuer une conversion.";
+    }
+    if (error) {
+      return error;
+    }
+    if (amount && (isNaN(amount) || Number(amount) <= 0)) {
+      return "Veuillez saisir un montant valide supérieur à zéro.";
+    }
+    return null;
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white w-full pt-12">
       <div className="text-center max-3xl px-12 py-12 sm:py-20 mb-0">
@@ -199,7 +212,7 @@ const CurrencyConverter = () => {
           </h2>
         )}
         {/* teto md:grid-col-3 */}
-        <div className="grid grid-cols-1 md:grid-cols-7 gap-5 items-end">
+        <div className="grid grid-cols-1 md:grid-cols-7 gap-3 items-end">
           <div className="md:col-span-2">
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Montant
@@ -226,6 +239,7 @@ const CurrencyConverter = () => {
               onChange={setSourceCurrency}
               label="Devise source"
               placeholder="Sélectionnez une devise"
+              className="min-w-[200px]"
             />
           </div>
 
@@ -233,11 +247,11 @@ const CurrencyConverter = () => {
           <div className="flex items-center justify-center md:col-span-1">
             <button
               onClick={handleSwapCurrencies}
-              className="bg-gray-100 p-3 rounded-full hover:bg-gray-200 cursor-pointer transition duration-300"
+              className="bg-gray-100 p-2 rounded-full hover:bg-gray-200 cursor-pointer transition duration-300"
               disabled={!sourceCurrency || !targetCurrency}
             >
               <svg
-                className="w-6 h-6 text-gray-600"
+                className="w-8 h-8 text-gray-600"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -260,6 +274,7 @@ const CurrencyConverter = () => {
               onChange={setTargetCurrency}
               label="Devise cible"
               placeholder="Sélectionnez une devise"
+              className="min-w-[200px]"
             />
           </div>
         </div>
@@ -305,23 +320,8 @@ const CurrencyConverter = () => {
           </button>
         </div>
 
-        {/* Message d'erreur pour les devises identiques */}
-        {sameCurrencyError && (
-          <div className="mt-4 text-red-500 font-medium text-center flex items-center justify-center">
-            <FaExclamationTriangle className="mr-2" />
-            <span>
-              Veuillez sélectionner deux devises différentes pour effectuer une
-              conversion
-            </span>
-          </div>
-        )}
-
-        {/* Message d'erreur si API echoue */}
-        {error && (
-          <div className="mt-4 text-red-500 font-medium text-center">
-            {error}
-          </div>
-        )}
+        {/* Remplacer les anciens messages d'erreur par le nouveau composant */}
+        <ErrorAlert message={getErrorMessage()} />
 
         {/* Resulatat conversion */}
         {convertedAmount && (
