@@ -1086,5 +1086,205 @@
     "date_maj": "2025-05-24",
     "devise_source": "AED",
     "devise_cible": "CHF"
+  },
+  {
+    "id": "TR137",
+    "taux_actuel": 1.9625,
+    "taux_precedent": 1.9518,
+    "date_maj": "2025-05-24",
+    "devise_source": "AED",
+    "devise_cible": "CNY"
+  },
+  {
+    "id": "TR138",
+    "taux_actuel": 22.4515,
+    "taux_precedent": 22.321,
+    "date_maj": "2025-05-24",
+    "devise_source": "AED",
+    "devise_cible": "INR"
+  },
+  {
+    "id": "TR139",
+    "taux_actuel": 1.3728,
+    "taux_precedent": 1.3625,
+    "date_maj": "2025-05-24",
+    "devise_source": "AED",
+    "devise_cible": "BRL"
+  },
+  {
+    "id": "TR140",
+    "taux_actuel": 5.1425,
+    "taux_precedent": 5.121,
+    "date_maj": "2025-05-24",
+    "devise_source": "AED",
+    "devise_cible": "ZAR"
+  },
+  {
+    "id": "TR141",
+    "taux_actuel": 365.75,
+    "taux_precedent": 363.8,
+    "date_maj": "2025-05-24",
+    "devise_source": "AED",
+    "devise_cible": "KRW"
+  },
+  {
+    "id": "TR142",
+    "taux_actuel": 23.8725,
+    "taux_precedent": 23.751,
+    "date_maj": "2025-05-24",
+    "devise_source": "AED",
+    "devise_cible": "RUB"
+  },
+  {
+    "id": "TR143",
+    "taux_actuel": 0.4325,
+    "taux_precedent": 0.4285,
+    "date_maj": "2025-05-24",
+    "devise_source": "AED",
+    "devise_cible": "NZD"
+  },
+  {
+    "id": "TR144",
+    "taux_actuel": 0.3628,
+    "taux_precedent": 0.3612,
+    "date_maj": "2025-05-24",
+    "devise_source": "AED",
+    "devise_cible": "SGD"
+  },
+  {
+    "id": "TR145",
+    "taux_actuel": 1225.5,
+    "taux_precedent": 1218.25,
+    "date_maj": "2025-05-24",
+    "devise_source": "AED",
+    "devise_cible": "MGA"
+  },
+  {
+    "id": "TR146",
+    "taux_actuel": 0.1525,
+    "taux_precedent": 0.151,
+    "date_maj": "2025-05-24",
+    "devise_source": "BRL",
+    "devise_cible": "GBP"
+  },
+  {
+    "id": "TR147",
+    "taux_actuel": 30.4515,
+    "taux_precedent": 30.221,
+    "date_maj": "2025-05-24",
+    "devise_source": "BRL",
+    "devise_cible": "JPY"
+  },
+  {
+    "id": "TR148",
+    "taux_actuel": 0.2928,
+    "taux_precedent": 0.2915,
+    "date_maj": "2025-05-24",
+    "devise_source": "BRL",
+    "devise_cible": "AUD"
+  },
+  {
+    "id": "TR149",
+    "taux_actuel": 0.265,
+    "taux_precedent": 0.2635,
+    "date_maj": "2025-05-24",
+    "devise_source": "BRL",
+    "devise_cible": "CAD"
+  },
+  {
+    "id": "TR150",
+    "taux_actuel": 0.1785,
+    "taux_precedent": 0.1772,
+    "date_maj": "2025-05-24",
+    "devise_source": "BRL",
+    "devise_cible": "CHF"
+  },
+  {
+    "id": "TR151",
+    "taux_actuel": 1.3725,
+    "taux_precedent": 1.362,
+    "date_maj": "2025-05-24",
+    "devise_source": "BRL",
+    "devise_cible": "CNY"
+  },
+  {
+    "id": "TR152",
+    "taux_actuel": 18.1425,
+    "taux_precedent": 18.021,
+    "date_maj": "2025-05-24",
+    "devise_source": "BRL",
+    "devise_cible": "INR"
+  },
+  {
+    "id": "TR153",
+    "taux_actuel": 3.8518,
+    "taux_precedent": 3.8315,
+    "date_maj": "2025-05-24",
+    "devise_source": "BRL",
+    "devise_cible": "ZAR"
+  },
+  {
+    "id": "TR154",
+    "taux_actuel": 265.75,
+    "taux_precedent": 263.8,
+    "date_maj": "2025-05-24",
+    "devise_source": "BRL",
+    "devise_cible": "KRW"
+  },
+  {
+    "id": "TR155",
+    "taux_actuel": 0.2215,
+    "taux_precedent": 0.2202,
+    "date_maj": "2025-05-24",
+    "devise_source": "BRL",
+    "devise_cible": "AED"
+  },
+  {
+    "id": "TR156",
+    "taux_actuel": 16.8725,
+    "taux_precedent": 16.751,
+    "date_maj": "2025-05-24",
+    "devise_source": "BRL",
+    "devise_cible": "RUB"
+  },
+  {
+    "id": "TR157",
+    "taux_actuel": 0.3325,
+    "taux_precedent": 0.331,
+    "date_maj": "2025-05-24",
+    "devise_source": "BRL",
+    "devise_cible": "NZD"
+  },
+  {
+    "id": "TR158",
+    "taux_actuel": 0.2518,
+    "taux_precedent": 0.2505,
+    "date_maj": "2025-05-24",
+    "devise_source": "BRL",
+    "devise_cible": "SGD"
+  },
+  {
+    "id": "TR159",
+    "taux_actuel": 895.5,
+    "taux_precedent": 890.25,
+    "date_maj": "2025-05-24",
+    "devise_source": "BRL",
+    "devise_cible": "MGA"
+  },
+  {
+    "id": "TR160",
+    "taux_actuel": 0.1825,
+    "taux_precedent": 0.181,
+    "date_maj": "2025-05-24",
+    "devise_source": "BRL",
+    "devise_cible": "EUR"
+  },
+  {
+    "id": "TR161",
+    "taux_actuel": 0.195,
+    "taux_precedent": 0.1935,
+    "date_maj": "2025-05-24",
+    "devise_source": "BRL",
+    "devise_cible": "USD"
   }
 ]

@@ -51,13 +51,13 @@ async function importTaux() {
   console.log("✅ Taux importés + marge calcule");
 }
 
-importDevise()
-  .then(importTaux)
-  .then(() => console.log("Donnees importer avec succes avec les Taux"))
-  .catch((err) => console.log("Erreur lors de l'importation des données", err));
+// importDevise()
+//   .then(importTaux)
+//   .then(() => console.log("Donnees importer avec succes avec les Taux"))
+//   .catch((err) => console.log("Erreur lors de l'importation des données", err));
 
-// importTaux()
-//   .then(() => console.log("Donnees importer avec succes"))
-//   .catch((err) => console.log("Erreur de l'importation des donnees", err));
+importTaux()
+  .then(() => console.log("Donnees importer avec succes"))
+  .catch((err) => console.log("Erreur de l'importation des donnees", err));
 
 // .then(importTaux)
